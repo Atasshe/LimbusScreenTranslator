@@ -26,6 +26,7 @@ data class UiLanguage(val code: String, val label: String)
 data class UiMessage(@StringRes val id: Int, val args: List<Any> = emptyList())
 
 data class SettingsUiState(
+    val advanceOnScreenTouch: Boolean = false,
     val opacity: Float = Settings.DEFAULT_OPACITY,
     val uiLanguage: String = Settings.defaultUiLanguage(),
     val sources: List<Source> = emptyList(),
@@ -48,6 +49,7 @@ class SettingsViewModel @Inject constructor(
         sourceRepository.sources,
     ) { prefs, sources ->
         SettingsUiState(
+            advanceOnScreenTouch = prefs.advanceOnScreenTouch,
             opacity = prefs.opacity,
             uiLanguage = prefs.uiLanguage
                 .takeIf { code -> UI_LANGUAGES.any { it.code == code } }
@@ -55,6 +57,10 @@ class SettingsViewModel @Inject constructor(
             sources = sources,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), SettingsUiState())
+
+    fun setAdvanceOnScreenTouch(enabled: Boolean) {
+        viewModelScope.launch { settings.setAdvanceOnScreenTouch(enabled) }
+    }
 
     fun setOpacityPercent(percent: Int) {
         viewModelScope.launch { settings.setOpacity(percent / 100f) }

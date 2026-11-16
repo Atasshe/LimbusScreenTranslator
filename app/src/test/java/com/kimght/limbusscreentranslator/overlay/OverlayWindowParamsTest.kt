@@ -31,6 +31,13 @@ class OverlayWindowParamsTest {
     }
 
     @Test
+    fun `observes outside touches while keeping the game touchable`() {
+        val required = WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH or
+            WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+        assertEquals(required, params.flags and required)
+    }
+
+    @Test
     fun `does not fit any insets so the frame never shrinks below a visible status bar`() {
         assertEquals(0, params.fitInsetsTypes)
     }

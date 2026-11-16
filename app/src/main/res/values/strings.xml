@@ -116,4 +116,6 @@
         <item quantity="one">%1$d EPISODE</item>
         <item quantity="other">%1$d EPISODES</item>
     </plurals>
+    <string name="settings_advance_on_screen_touch">Advance by touching the screen</string>
+    <string name="settings_advance_on_screen_touch_description">Touch outside the overlay to advance one translated line while the game receives the same touch. Active only with the dialogue panel open. Any outside touch counts, including the start of a swipe; minimize the overlay in menus or other apps. This does not detect dialogue changes automatically.</string>
 </resources>

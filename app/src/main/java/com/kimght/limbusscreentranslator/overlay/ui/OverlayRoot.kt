@@ -91,6 +91,8 @@ import com.kimght.limbusscreentranslator.ui.theme.Limbus300
 import com.kimght.limbusscreentranslator.ui.theme.Limbus500
 import com.kimght.limbusscreentranslator.ui.theme.Limbus600
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
@@ -110,6 +112,7 @@ class OverlayActions(
     val onDrag: (Float, Float) -> Unit,
     val onDragEnd: () -> Unit,
     val onRetryChapters: () -> Unit,
+    val outsideTouches: Flow<Unit> = emptyFlow(),
 )
 
 private val PanelBorder = Limbus300.copy(alpha = 0.34f)
@@ -199,6 +202,17 @@ private fun DialogueContent(state: OverlayUiState, actions: OverlayActions, modi
         LaunchedEffect(state.episodeKey, state.lines.size) {
             val target = state.lineIndex.coerceIn(0, state.lines.lastIndex)
             if (pagerState.currentPage != target) pagerState.scrollToPage(target)
+        }
+
+        // Drive the same pager as overlay taps. Its settled-page observer saves
+        // progress, so there is no second competing source of line indices.
+        LaunchedEffect(pagerState, state.episodeKey, state.lines.size, actions.outsideTouches) {
+            actions.outsideTouches.collect {
+                if (!pagerState.isScrollInProgress) {
+                    val next = pagerState.currentPage + 1
+                    if (next <= lastIndex) pagerState.scrollToPage(next)
+                }
+            }
         }
 
         val current = state.lines[pagerState.currentPage.coerceIn(0, lastIndex)]

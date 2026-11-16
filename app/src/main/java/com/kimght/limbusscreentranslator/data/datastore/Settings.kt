@@ -3,6 +3,7 @@ package com.kimght.limbusscreentranslator.data.datastore
 import java.util.Locale
 
 data class Settings(
+    val advanceOnScreenTouch: Boolean = false,
     val opacity: Float = DEFAULT_OPACITY,
     val textSize: Float = DEFAULT_TEXT_SIZE,
     val uiLanguage: String = defaultUiLanguage(),

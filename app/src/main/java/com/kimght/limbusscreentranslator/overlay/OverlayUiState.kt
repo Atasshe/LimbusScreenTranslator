@@ -43,6 +43,7 @@ data class OverlayUiState(
     val mode: OverlayMode = OverlayMode.DIALOGUE,
     val minimized: Boolean = false,
     val portrait: Boolean = false,
+    val advanceOnScreenTouch: Boolean = false,
     val opacity: Float = Settings.DEFAULT_OPACITY,
     val textScale: Float = Settings.DEFAULT_TEXT_SIZE,
     val episodeKey: String? = null,

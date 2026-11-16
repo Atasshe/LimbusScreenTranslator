@@ -58,6 +58,15 @@ class SettingsRepositoryTest {
     }
 
     @Test
+    fun `screen touch navigation persists and reset disables it`() = runTest {
+        assertEquals(false, repo.settings.first().advanceOnScreenTouch)
+        repo.setAdvanceOnScreenTouch(true)
+        assertEquals(true, SettingsRepository(dataStore).settings.first().advanceOnScreenTouch)
+        repo.resetToDefaults()
+        assertEquals(false, repo.settings.first().advanceOnScreenTouch)
+    }
+
+    @Test
     fun `opacity is clamped to its allowed range`() = runTest {
         repo.setOpacity(5f)
         assertEquals(Settings.MAX_OPACITY, repo.settings.first().opacity)

@@ -82,6 +82,7 @@ Tap **Open overlay**, grant notification permission when requested, and enable *
 - Open the chapter selector and choose the episode that matches the scene you are playing; use the quick navigation to select the next or previous episode.
 - Swipe to move to the next or previous dialogue line, or tap to advance to the next line.
 - Minimize the overlay during gameplay.
+- Enable **Settings → Advance by touching the screen** to advance the translation when touching outside the overlay, while the same touch reaches the game. This option defaults to off and pauses when minimized or in chapter/resize mode. It observes the start of each touch (including swipes), does not detect dialogue changes, and stops at the last line. Minimize it in menus or other apps to avoid losing your place.
 
 <table>
   <tr>

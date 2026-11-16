@@ -13,6 +13,7 @@ import android.hardware.display.DisplayManager
 import android.os.Build
 import android.os.IBinder
 import android.provider.Settings
+import android.view.MotionEvent
 import android.view.Display
 import android.view.Surface
 import android.view.WindowManager
@@ -43,6 +44,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -75,6 +78,10 @@ class OverlayService : Service() {
     @Volatile
     private var minimizedNow: Boolean = false
     private var controllerRef: OverlayController? = null
+    private val outsideTouches = MutableSharedFlow<Unit>(
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+    )
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -156,10 +163,22 @@ class OverlayService : Service() {
             onDrag = ::onDragBy,
             onDragEnd = ::onDragEnd,
             onRetryChapters = controller::retryChapterSync,
+            outsideTouches = outsideTouches,
         )
 
         val view = ComposeView(this).apply {
             host.attachTo(this)
+            setOnTouchListener { _, event ->
+                if (event.actionMasked == MotionEvent.ACTION_OUTSIDE) {
+                    if (shouldAdvanceOnOutsideTouch(controller.uiState.value)) {
+                        outsideTouches.tryEmit(Unit)
+                    }
+                    // The game receives the original touch independently.
+                    true
+                } else {
+                    false
+                }
+            }
             setContent {
                 val languageFlow = remember {
                     settings.settings

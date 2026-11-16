@@ -2,6 +2,7 @@ package com.kimght.limbusscreentranslator.data.datastore
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.floatPreferencesKey
@@ -19,6 +20,7 @@ class SettingsRepository @Inject constructor(
     private val dataStore: DataStore<Preferences>,
 ) {
     private object Keys {
+        val ADVANCE_ON_SCREEN_TOUCH = booleanPreferencesKey("advance_on_screen_touch")
         val OPACITY = floatPreferencesKey("opacity")
         val TEXT_SIZE = floatPreferencesKey("text_size")
         val UI_LANGUAGE = stringPreferencesKey("ui_language")
@@ -38,6 +40,7 @@ class SettingsRepository @Inject constructor(
         if (e is IOException) emit(emptyPreferences()) else throw e
     }.map { prefs ->
         Settings(
+            advanceOnScreenTouch = prefs[Keys.ADVANCE_ON_SCREEN_TOUCH] ?: false,
             opacity = prefs[Keys.OPACITY] ?: Settings.DEFAULT_OPACITY,
             textSize = prefs[Keys.TEXT_SIZE] ?: Settings.DEFAULT_TEXT_SIZE,
             uiLanguage = prefs[Keys.UI_LANGUAGE] ?: Settings.defaultUiLanguage(),
@@ -51,6 +54,10 @@ class SettingsRepository @Inject constructor(
             activeLocalizationId = prefs[Keys.ACTIVE_LOCALIZATION],
             selectedBrowsingSource = prefs[Keys.BROWSING_SOURCE],
         )
+    }
+
+    suspend fun setAdvanceOnScreenTouch(enabled: Boolean) = edit {
+        it[Keys.ADVANCE_ON_SCREEN_TOUCH] = enabled
     }
 
     suspend fun setOpacity(value: Float) = edit {

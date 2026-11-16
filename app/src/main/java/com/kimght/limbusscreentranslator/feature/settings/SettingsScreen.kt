@@ -23,6 +23,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,6 +38,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -81,6 +84,7 @@ fun SettingsScreen(
     SettingsContent(
         state = state,
         onOpacity = viewModel::setOpacityPercent,
+        onAdvanceOnScreenTouch = viewModel::setAdvanceOnScreenTouch,
         onUiLanguage = viewModel::setUiLanguage,
         onAddSource = viewModel::addSource,
         onRemoveSource = viewModel::removeSource,
@@ -93,6 +97,7 @@ fun SettingsScreen(
 private fun SettingsContent(
     state: SettingsUiState,
     onOpacity: (Int) -> Unit,
+    onAdvanceOnScreenTouch: (Boolean) -> Unit,
     onUiLanguage: (String) -> Unit,
     onAddSource: (String, String) -> Unit,
     onRemoveSource: (String) -> Unit,
@@ -109,6 +114,29 @@ private fun SettingsContent(
         SectionLabel(stringResource(R.string.settings_overlay))
         Spacer(Modifier.size(12.dp))
         OpacityCard(percent = state.opacityPercent, opacity = state.opacity, onOpacity = onOpacity)
+
+        val resourcesTouchLabel = stringResource(R.string.settings_advance_on_screen_touch)
+        Spacer(Modifier.size(12.dp))
+        Row(
+            Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(Modifier.weight(1f).padding(end = 12.dp)) {
+                Text(stringResource(R.string.settings_advance_on_screen_touch), color = Limbus200)
+                Text(
+                    stringResource(R.string.settings_advance_on_screen_touch_description),
+                    color = Limbus500,
+                    fontSize = 12.sp,
+                )
+            }
+            Switch(
+                checked = state.advanceOnScreenTouch,
+                onCheckedChange = onAdvanceOnScreenTouch,
+                modifier = Modifier.semantics {
+                    contentDescription = resourcesTouchLabel
+                },
+            )
+        }
 
         Spacer(Modifier.size(20.dp))
         SectionLabel(stringResource(R.string.settings_interface_language))
