@@ -118,4 +118,15 @@
     </plurals>
     <string name="settings_advance_on_screen_touch">Advance by touching the screen</string>
     <string name="settings_advance_on_screen_touch_description">Touch outside the overlay to advance one translated line while the game receives the same touch. Active only with the dialogue panel open. Any outside touch counts, including the start of a swipe; minimize the overlay in menus or other apps. This does not detect dialogue changes automatically.</string>
+
+    <!-- Screen translation -->
+    <string name="screen_translation">Screen translation</string>
+    <string name="screen_start">Translate game screen</string>
+    <string name="screen_stop">Stop screen translation</string>
+    <string name="screen_instructions">Choose Limbus Company under “A single app” in the Android prompt. Use English in the game and play in full screen.</string>
+    <string name="screen_preparing">Preparing the English and community translation data…</string>
+    <string name="screen_running">Matching on-screen English to the active community translation.</string>
+    <string name="screen_capture_failed">Could not read the game screen. Start again and share only Limbus Company.</string>
+    <string name="screen_pack_failed">Could not prepare screen translations. Check your connection and the active translation pack.</string>
+    <string name="screen_update_pack">Update the active translation pack in Library, then try screen translation again.</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.kimght.limbusscreentranslator.feature.home
 
+import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -52,6 +53,8 @@ fun HomeScreen(
     onBrowseLibrary: () -> Unit,
     onOpenOverlay: () -> Unit,
     onCloseOverlay: () -> Unit,
+    screenTranslationRunning: Boolean,
+    onToggleScreenTranslation: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
@@ -70,6 +73,8 @@ fun HomeScreen(
                 else -> onOpenOverlay()
             }
         },
+        screenTranslationRunning = screenTranslationRunning,
+        onToggleScreenTranslation = onToggleScreenTranslation,
         modifier = modifier,
     )
 }
@@ -80,6 +85,8 @@ private fun HomeContent(
     onManage: (ActiveLocalization) -> Unit,
     onBrowseLibrary: () -> Unit,
     onPrimaryAction: () -> Unit,
+    screenTranslationRunning: Boolean,
+    onToggleScreenTranslation: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -117,6 +124,23 @@ private fun HomeContent(
                 },
             )
             androidx.compose.foundation.layout.Spacer(Modifier.size(9.dp))
+            if (Build.VERSION.SDK_INT >= 34 && (screenTranslationRunning || !active.isInstalling)) {
+                OutlineButton(
+                    text = stringResource(
+                        if (screenTranslationRunning) R.string.screen_stop else R.string.screen_start,
+                    ),
+                    onClick = onToggleScreenTranslation,
+                )
+                if (!screenTranslationRunning) {
+                    Text(
+                        text = stringResource(R.string.screen_instructions),
+                        color = Limbus500,
+                        fontSize = 12.sp,
+                        modifier = Modifier.padding(top = 4.dp, bottom = 4.dp),
+                    )
+                }
+                androidx.compose.foundation.layout.Spacer(Modifier.size(9.dp))
+            }
             OutlineButton(text = stringResource(R.string.home_manage_localization), onClick = { onManage(active) })
 
             androidx.compose.foundation.layout.Spacer(Modifier.size(22.dp))

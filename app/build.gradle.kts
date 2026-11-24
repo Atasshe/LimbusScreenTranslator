@@ -123,6 +123,8 @@ dependencies {
     implementation(libs.okhttp)
     debugImplementation(libs.okhttp.logging.interceptor)
 
+    implementation(libs.mlkit.text.recognition)
+
     // Image loading (optional)
     implementation(libs.coil.compose)
 

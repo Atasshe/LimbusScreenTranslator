@@ -63,6 +63,8 @@ private data class TopDestination(val route: String, @StringRes val label: Int, 
 fun ManagerApp(
     onOpenOverlay: () -> Unit,
     onCloseOverlay: () -> Unit,
+    screenTranslationRunning: Boolean,
+    onToggleScreenTranslation: () -> Unit,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
 ) {
@@ -119,6 +121,8 @@ fun ManagerApp(
                     onBrowseLibrary = { navController.navigateTop(Routes.LIBRARY) },
                     onOpenOverlay = onOpenOverlay,
                     onCloseOverlay = onCloseOverlay,
+                    screenTranslationRunning = screenTranslationRunning,
+                    onToggleScreenTranslation = onToggleScreenTranslation,
                 )
             }
             composable(Routes.LIBRARY) {

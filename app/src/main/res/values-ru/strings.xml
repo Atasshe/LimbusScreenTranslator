@@ -118,4 +118,15 @@
     </plurals>
     <string name="settings_advance_on_screen_touch">Переход по касанию экрана</string>
     <string name="settings_advance_on_screen_touch_description">Касание вне окна перевода переключает строку и передаётся игре. Работает только при открытом диалоге. Учитывается любое касание, включая начало свайпа; сворачивайте окно в меню и других приложениях. Автоматическое определение смены реплик не выполняется.</string>
+
+    <!-- Screen translation -->
+    <string name="screen_translation">Перевод экрана</string>
+    <string name="screen_start">Переводить экран игры</string>
+    <string name="screen_stop">Остановить перевод экрана</string>
+    <string name="screen_instructions">В запросе Android выберите «Одно приложение», затем Limbus Company. Установите английский язык в игре и откройте её на весь экран.</string>
+    <string name="screen_preparing">Подготовка английских текстов и перевода сообщества…</string>
+    <string name="screen_running">Поиск английского текста с экрана в активном переводе сообщества.</string>
+    <string name="screen_capture_failed">Не удалось прочитать экран игры. Попробуйте снова и выберите только Limbus Company.</string>
+    <string name="screen_pack_failed">Не удалось подготовить перевод экрана. Проверьте соединение и активный пакет перевода.</string>
+    <string name="screen_update_pack">Обновите активный пакет в библиотеке и запустите перевод экрана снова.</string>
 </resources>
