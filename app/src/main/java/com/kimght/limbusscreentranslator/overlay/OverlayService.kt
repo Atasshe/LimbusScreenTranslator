@@ -38,6 +38,7 @@ import com.kimght.limbusscreentranslator.overlay.ui.OVERLAY_CHROME_DP
 import com.kimght.limbusscreentranslator.overlay.ui.OVERLAY_MINIMIZED_SIZE_DP
 import com.kimght.limbusscreentranslator.overlay.ui.OverlayActions
 import com.kimght.limbusscreentranslator.overlay.ui.OverlayRoot
+import com.kimght.limbusscreentranslator.screen.ScreenTranslationService
 import com.kimght.limbusscreentranslator.ui.theme.LimbusScreenTranslatorTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -95,6 +96,7 @@ class OverlayService : Service() {
             return
         }
 
+        ScreenTranslationService.stop(this)
         windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         val controller = OverlayController(settings, localizations, scenarios, overlayState, chapterSync, scope)
         controllerRef = controller

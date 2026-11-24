@@ -97,6 +97,12 @@ Tap **Open overlay**, grant notification permission when requested, and enable *
   </tr>
 </table>
 
+### Translate the game screen (Android 14+)
+
+Install an up-to-date community pack, set it active, and tap **Translate game screen** on Home. In the Android screen sharing prompt choose **A single app** and select **Limbus Company**. Use the game's English locale and fullscreen landscape mode. The notification has a **Stop screen translation** action.
+
+The first session downloads a [reference English archive](https://github.com/x1bViolet/Limbus-Localization-Files/tree/English) and the active translation's archive. Image recognition and matching run on the phone. Recognized text is matched to the active pack and drawn in its original area, including menu labels, skills, item descriptions and dialogue. Text with no reliable match stays visible in English. The manual dialogue overlay remains available from **Open overlay**.
+
 ## Contributors
 
 <a href="https://github.com/kimght/LimbusScreenTranslator/graphs/contributors">
